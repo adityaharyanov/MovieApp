@@ -45,6 +45,13 @@ class GenreListViewController : UIViewController {
                 self.gotoMovieList(selectedGenre: value)
             }).disposed(by: self.viewModel.disposeBag)
         
+        self.tableView.rx
+            .itemSelected
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { value in
+                self.tableView.deselectRow(at: value, animated: true)
+            }).disposed(by: self.viewModel.disposeBag)
+        
         viewModel.getGenres(error: self.showErrorAlert(message:))
     }
     

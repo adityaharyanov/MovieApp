@@ -47,6 +47,13 @@ class MovieListViewController : UIViewController {
             self.viewModel.getMovies(error: self.showErrorAlert(message:))
         }.disposed(by: self.viewModel.disposeBag)
         
+        self.tableView.rx
+            .itemSelected
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { value in
+                self.tableView.deselectRow(at: value, animated: true)
+            }).disposed(by: self.viewModel.disposeBag)
+        
         self.viewModel.getMovies(error: self.showErrorAlert(message:))
     }
     
